@@ -1,10 +1,10 @@
 {
   "name": "umi-plugin-pro",
   "version": "1.0.1",
-  "description": "Google Analytics for umi",
+  "description": "insert magic code in pro preview",
   "main": "index.js",
   "scripts": {
-    "pub": "npm run build && npm publish",
+    "prepublishOnly": "npm run build",
     "dev": "babel src --watch --presets=es2015,stage-1 --out-dir .",
     "build": "babel src --presets=es2015,stage-1 --out-dir ."
   },
