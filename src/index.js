@@ -46,7 +46,7 @@ export default (api, opts) => {
               return prevFetch.call(window, url, auditOptions);
           }
           // 未开启操作审计请求以跨域方式发出
-          var corsOptions = __assign({}, options);
+          var corsOptions = __assign({}, options,{credentials: 'omit'});
           // 发起跨域请求
           var entireUrl = getEntireUrl(url, apiDomain);
           return prevFetch.call(window, entireUrl, corsOptions);
@@ -62,9 +62,10 @@ export default (api, opts) => {
   api.onBuildSuccess(() => {
     // 创建一个 404 文件，因为 github pages 不支持单应用模式
     const { absOutputPath } = api.paths;
-    fs.copyFile(
+    fs.copyFileSync(
       path.join(absOutputPath, "index.html"),
       path.join(absOutputPath, "404.html")
     );
+    api.log.success("create 404.html");
   });
 };
