@@ -1,9 +1,12 @@
+const fs = require("fs");
+const path = require("path");
+
 export default (api, opts) => {
   if (process.env.NODE_ENV !== "production") {
     return false;
   }
 
-  console.log("insert pro magic code");
+  api.log.success("insert pro magic code");
   const gaTpl = function(serverUrl) {
     return `
     var __assign = (this && this.__assign) || function () {
@@ -53,7 +56,15 @@ export default (api, opts) => {
   
   `;
   };
-  api.addHTMLScript({
+  api.addHTMLHeadScript({
     content: gaTpl(opts.serverUrl)
+  });
+  api.onBuildSuccess(() => {
+    // 创建一个 404 文件，因为 github pages 不支持单应用模式
+    const { absOutputPath } = api.paths;
+    fs.copyFile(
+      path.join(absOutputPath, "index.html"),
+      path.join(absOutputPath, "404.html")
+    );
   });
 };
