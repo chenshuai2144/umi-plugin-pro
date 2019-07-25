@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/umijs/umi-plugin-ga.git"
+    "url": "git+https://github.com/chenshuai2144/umi-plugin-pro.git"
   },
   "keywords": [
     "umi",
@@ -19,9 +19,9 @@
   "author": "chenshuai2144",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/umijs/umi-plugin-ga/issues"
+    "url": "https://github.com/chenshuai2144/umi-plugin-pro/issues"
   },
-  "homepage": "https://github.com/umijs/umi-plugin-ga#readme",
+  "homepage": "https://github.com/chenshuai2144/umi-plugin-pro#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
