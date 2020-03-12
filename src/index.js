@@ -1,13 +1,15 @@
+/** @format */
+
 const fs = require('fs');
 const path = require('path');
 
-export default (api, opts) => {
+export default api => {
   if (process.env.NODE_ENV !== 'production') {
     return false;
   }
 
-  api.log.success('insert pro magic code');
-  const gaTpl = function(serverUrl) {
+  api.logger.log('insert pro magic code');
+  const gaTpl = function(serverUrl = 'https://proapi.azurewebsites.net/') {
     return `
     var __assign = (this && this.__assign) || function () {
       __assign = Object.assign || function(t) {
@@ -56,13 +58,17 @@ export default (api, opts) => {
   
   `;
   };
-  api.addHTMLScript({
-    content: gaTpl(opts.serverUrl),
-  });
-  api.onBuildSuccess(() => {
+
+  api.addHTMLScripts(() => [
+    {
+      content: gaTpl(process.env.SERVER_URL),
+    },
+  ]);
+
+  api.onBuildComplete(() => {
     // 创建一个 404 文件，因为 github pages 不支持单应用模式
     const { absOutputPath } = api.paths;
     fs.copyFileSync(path.join(absOutputPath, 'index.html'), path.join(absOutputPath, '404.html'));
-    api.log.success('create 404.html');
+    api.logger.log('create 404.html');
   });
 };
