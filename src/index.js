@@ -3,13 +3,25 @@
 const fs = require('fs');
 const path = require('path');
 
-export default api => {
+export default (api) => {
   if (process.env.NODE_ENV !== 'production') {
     return false;
   }
+  const { GA_KEY } = process.env;
 
+  // support dev tools
+  api.modifyDefaultConfig((config) => {
+    const { define } = config;
+    config.define = {
+      ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION: 'site',
+      ...(define || {}),
+    };
+    config.analytics = GA_KEY ? { ga: GA_KEY } : false;
+    return config;
+  });
   api.logger.log('insert pro magic code');
-  const gaTpl = function(serverUrl = 'https://proapi.azurewebsites.net/') {
+
+  const gaTpl = function (serverUrl = 'https://proapi.azurewebsites.net/') {
     return `
     var __assign = (this && this.__assign) || function () {
       __assign = Object.assign || function(t) {
