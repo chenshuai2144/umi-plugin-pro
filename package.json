@@ -1,6 +1,6 @@
 {
   "name": "umi-plugin-pro",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "insert magic code in pro preview",
   "main": "index.js",
   "scripts": {
